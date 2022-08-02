@@ -7,7 +7,7 @@ class reverse{
       {
         // checks to see if no arguments were entered if so prints a usage statment and returns
         if (args.length ==0){
-           System.err.println("usage: resolve <name1> .. <nameN>");
+           System.err.println("usage: resolve <ip1> .. <ipN>");
            return;
            }
       int x = 0;
