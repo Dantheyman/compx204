@@ -16,6 +16,7 @@ class SimpleClient{
          System.err.println("Exception" + e );
          }
 
+
      InetAddress ia = InetAddress.getByName(args);
      try{
        int port = Integer.parseint(args[1]);
@@ -23,8 +24,14 @@ class SimpleClient{
      catch(excetption e ){
        System.err.println("Exception: " +e);
        return;
-     } 
-    Socket Client = new Socket(ia,port)
+       }
+
+
+    Socket client = new Socket(ia,port);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+    String message = reader.readLine();
+    System.out.println(message)
+    me.close();
 
 
 

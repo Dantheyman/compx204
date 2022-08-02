@@ -16,8 +16,7 @@ class SimpleServer{
           String ip = Getip(ia);
           String dns = getDns(ia);
           PrintWriter write = new PrintWriter(sock.getOutputStream(),true);
-          write.println("Hello " + dns);
-          write.println("Your IP Adress is " + ip);
+          write.println("Hello " + dns "\n" ("Your IP Adress is " + ip);
           sock.close();
           }
         }
