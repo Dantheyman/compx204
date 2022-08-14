@@ -1,3 +1,4 @@
+// Daniel Jensen 1576516  
 import java.net.*;
 import java.io.*;
 
@@ -6,18 +7,21 @@ class SimpleServer{
   public static void main(String[] args)
   {
 
-    ServerSocket servsock;
+    ServerSocket server;
     try {
-        servsock= new ServerSocket(0);
-        System.out.println("listening on port " + servsock.getLocalPort());
+        server= new ServerSocket(0);
+        System.out.println("listening on port " + server.getLocalPort());
+        // loop that connects to client then finds ip and dns and uses sends message back to client
         while (true){
-          Socket sock = servsock.accept();
-          InetAddress ia = GetINet(servsock);
+          Socket client = server.accept();
+          InetAddress ia = GetINet(client);
           String ip = Getip(ia);
           String dns = getDns(ia);
-          PrintWriter write = new PrintWriter(sock.getOutputStream(),true);
-          write.println("Hello " + dns "\n" ("Your IP Adress is " + ip);
-          sock.close();
+          PrintWriter write = new PrintWriter(client.getOutputStream(),true);
+          write.print("Hello " + dns );
+          System.out.println("in a loop");
+          write.println("Your IP Adress is " + ip);
+          client.close();
           }
         }
 
@@ -28,10 +32,10 @@ class SimpleServer{
       }
   }
   //Finds the InetAddress of the client
-  public static InetAddress GetINet(ServerSocket servsock){
+  public static InetAddress GetINet(Socket client){
 
     try {
-      InetAddress ia = servsock.getInetAddress();
+      InetAddress ia = client.getInetAddress();
       return ia;
     }
     catch(Exception e) {

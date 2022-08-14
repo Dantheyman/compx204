@@ -1,10 +1,8 @@
 // Daniel Jensen 1576516
-
 import java.net.*;
 
 class resolve{
-      public static void main (String[] args)
-      {
+      public static void main (String[] args){
         // checks to see if no arguments were entered if so prints a usage statment and returns
         if (args.length ==0){
            System.err.println("usage: resolve <name1> .. <nameN>");
@@ -19,7 +17,7 @@ class resolve{
          }
 
       }
-         //finds the ip for each name and prints it. if it can find an ip
+         //finds the ip for each name and prints it. if it cant find an ip
          // prints "unknownhost"
       public static void find_ip(String arg){
               InetAddress ia;

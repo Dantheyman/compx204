@@ -1,37 +1,52 @@
+// Daniel Jensen 1576516
 import java.net.*;
-import java.io.;
+import java.io.*;
 
 class SimpleClient{
 
-   public static void (String[] args)
+   public static void main (String[] args)
    {
-     if (args != 2 ){
-         System.err.println("usage: Simple client <DNS> <port>")
+     // makes sure there are 2 arguments
+     if (args.length != 2 ){
+         System.err.println("usage: Simple client <DNS> <port>");
          }
-     InetAddress ia;
+      // works out InetAddress
+     InetAddress ia =null ;
      try {
        ia = InetAddress.getByName(args[0]);
        }
-     catch(exception e ){
+     catch(Exception e ){
          System.err.println("Exception" + e );
          }
-
-
-     InetAddress ia = InetAddress.getByName(args);
+    //converts port string to an Integer
+      int port;
      try{
-       int port = Integer.parseint(args[1]);
+       port = Integer.parseInt(args[1]);
        }
-     catch(excetption e ){
+     catch(Exception e ){
        System.err.println("Exception: " +e);
        return;
        }
 
+    Socket client=null;
+    String message =  null;
+    // creates new socket then receives message from the server then pronts it to the screen
+    try {
+      client = new Socket(ia,port);
+      BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+      message = reader.readLine();
+      }
+      catch (IOException e){
+       System.err.println(e);
+      }
 
-    Socket client = new Socket(ia,port);
-    BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-    String message = reader.readLine();
-    System.out.println(message)
-    me.close();
+    System.out.println(message);
+    try{
+      client.close();
+      }
+      catch(IOException e){
+
+      }
 
 
 

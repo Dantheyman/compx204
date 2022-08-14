@@ -19,8 +19,8 @@ class reverse{
          }
 
       }
-         //finds the ip given the text rep then finds the dns name and prints it. if it cant find a name it
-         // prints "No name"
+         //finds the ip given the ip string then finds the dns name and prints it.
+         // if it cant find a name it prints "No name"
       public static void find_dns(String arg){
               InetAddress ia;
             try{
