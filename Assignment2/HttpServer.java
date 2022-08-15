@@ -42,9 +42,9 @@ class HttpServerThread extends Thread
         try
         {
             BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            BufferedOutputStream output = new BufferedOutputStream(client.getOutputStream(),);
+            BufferedOutputStream output = new BufferedOutputStream(client.getOutputStream());
             HttpServerRequest HttpRequest = new HttpServerRequest();
-            while (HtppRequest.isDone==false)
+            while (HttpRequest.isDone()==false)
             {
                 String requestLine = reader.readLine();
                 HttpRequest.process(requestLine);
@@ -83,7 +83,7 @@ class HttpServerThread extends Thread
     }
     public static void SendFile(String file,String host,BufferedOutputStream output)
     {
-        byte[] data = new byte[20] 
+        byte[] data = new byte[20];
         int offset=0;
         String path = host+"/"+ file ;
         try
@@ -94,7 +94,7 @@ class HttpServerThread extends Thread
             while(input.read()!=-1)
             {
                 input.read(data,offset,20);
-                output.write(data offset,20);
+                output.write(data, offset,20);
                 offset+=20; 
             }
             output.flush();
@@ -105,6 +105,10 @@ class HttpServerThread extends Thread
            String response = "HTTP/1.1 404 Not Found \r\n \r\n  404 File not Found";
            PrintLn(output,response);
            return;
+        }
+        catch (Exception e )
+        {
+            System.err.println("Exception: " +e );
         }
     }
 
