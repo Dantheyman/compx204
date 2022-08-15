@@ -42,14 +42,18 @@ class HttpServerThread extends Thread
         try
         {
             BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            BufferedOutputStream output = new BufferedOutputStream(client.getOutputStream());
-            while ((reader.readLine()!=null)||reader.readLine()!="")
+            BufferedOutputStream output = new BufferedOutputStream(client.getOutputStream(),);
+            HttpServerRequest HttpRequest = new HttpServerRequest();
+            while (HtppRequest.isDone==false)
             {
-                String request = reader.readLine();
-                String response = "200  OK \r\n \r\n Hello world";
-                PrintLn(output,response);
-                
+                String requestLine = reader.readLine();
+                HttpRequest.process(requestLine);
             }
+            String file = HttpRequest.getFile();
+            String host = HttpRequest.getHost();
+            SendFile(file,host,output);
+            
+    
         }
         catch(Exception e)
         {
@@ -72,18 +76,40 @@ class HttpServerThread extends Thread
         }
         catch(Exception e)
         {
+
          System.err.println("Exception: " + e);
         }
         
     }
+    public static void SendFile(String file,String host,BufferedOutputStream output)
+    {
+        byte[] data = new byte[20] 
+        int offset=0;
+        String path = host+"/"+ file ;
+        try
+        {
+            FileInputStream input = new FileInputStream(path);
+             String response = "HTTP/1.1 200  OK \r\n \r\n";
+             PrintLn(output,response);
+            while(input.read()!=-1)
+            {
+                input.read(data,offset,20);
+                output.write(data offset,20);
+                offset+=20; 
+            }
+            output.flush();
+            return;
+        }
+        catch(FileNotFoundException e)
+        {
+           String response = "HTTP/1.1 404 Not Found \r\n \r\n  404 File not Found";
+           PrintLn(output,response);
+           return;
+        }
+    }
+
 
     //////Getters and Setters 
-    public int GetPort()
-    {
-        return Port;
-    }
-    public void SetPort(int port)
-    {
-      this.Port = port ;
-    }
+    public int GetPort(){return Port;}
+    public void SetPort(int port){this.Port = port;}
 }

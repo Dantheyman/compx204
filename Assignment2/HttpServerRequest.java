@@ -4,29 +4,56 @@ class HttpServerRequest
     private String host = null;
     private boolean done = false;
     private int line = 0;
+    private int error= 0;
+    //private ArrayList<Strings> Headers ;
 
     public boolean isDone() { return done; }
+    public void setDone() {this.done=true;}
     public String getFile() { return file; }
+    public void setFile(String File){this.file=File;}
     public String getHost() { return host; }
+    public void setHost(String Host){this.host=Host;}
+
+    public void SetLine(int line){this.line=line;}
+    public int getLine(){return line;}
+
+   public HttpServerRequest (){}
 
     public void process(String in)
     {
-        if ((in.equals("GET"))== false)
+        if (getLine()==0)
         {
-            return;      
+            String[] parts = in.split("");
+            
+            if (((parts[0].equals("GET"))== false)|| (parts.length!=3))
+            {
+                System.err.println("Not A well formed request"); 
+                return;      
+            }
+            setfile(FileName(part[1]));
+            setError(1);
+            return;
+ 
+
         }
 
-        String[] parts = in.split("");
-        this.file=FileName(parts[1]);
-        this.host=Host(parts[3]);
-            
-    
+        else if (getLine()>0)
+        {
+            if (in.equals(""))
+            {
+                setDone();
+            }
+            else if (in.startsWith("HOST"))
+            {
+                setHost(Host(in)) ;
+            }
+            else 
+            {
+                SetLine(getLine()+1);
+            }
         
-     
-	/*
-	 * process the line, setting 'done' when HttpServerSession should
-	 * examine the contents of the request using getFile and getHost
-	 */
+          return;
+        }
     }
 
     public  String FileName(String part)
@@ -40,8 +67,8 @@ class HttpServerRequest
         return file;
     }
     
-    public String Host(String part)
+    public String Host(String in)
     {
-
+        return part.substring(4);
     }
 }
